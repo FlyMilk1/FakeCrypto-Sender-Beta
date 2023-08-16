@@ -1,7 +1,7 @@
 import random;
 import math
 # 100 is the best gscu value for testing and etc.
-gscu =100
+gscu =200
 gsc = gscu*gscu
 def Count(i):
     ncount = 0;
@@ -57,7 +57,10 @@ def CountSob(i):
 answer = input("Start TG? y/n?")
 while answer != ("stop"):
     if answer == ("y"):
-
+        loadperchunk = gsc / 100
+        loadper = 0;
+        loadpertd = 1;
+        loadperfs = 0;
         redchunklist = list();
         blackchunklist = list();
         greenchunklist = list();
@@ -90,6 +93,10 @@ while answer != ("stop"):
             else:
                 blackchunklist.append(i)
                 i+=1
+            if loadper == loadperchunk * loadpertd:
+                loadpertd += 1
+                loadperfs += 1
+                print(loadperfs)
 
         break;
     if answer == ("n"):
