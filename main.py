@@ -4,7 +4,7 @@ import math
 # 100 is the best gscu value for testing and etc.
 import main
 
-gscu =100
+gscu =200
 gsc = gscu*gscu
 redchunklist = list();
 blackchunklist = list();
@@ -59,7 +59,28 @@ def CountSob(i):
 
     return ncount;
 
+def CountSmoothing(i):
+    ncount = 0;
 
+    if (i % (gscu)) != 9 and i + 1 in greenchunklist:
+        ncount += 1;
+    if (i % (gscu)) != 0 and i - 1 in greenchunklist:
+        ncount += 1;
+    if i >= (gscu) and i - (gscu) in greenchunklist:
+        ncount += 1;
+    if i<=(9*gscu)  and i + (gscu) in greenchunklist:
+        ncount += 1;
+
+    if (i % (gscu)) != ((gscu) - 1) and i >= (gscu) and i - ((gscu) - 1) in greenchunklist:
+        ncount += 1;
+    if (i % (gscu)) != 0 and i >= (gscu) and i - ((gscu) + 1) in greenchunklist:
+        ncount += 1;
+    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != ((gscu) - 1) and i + ((gscu) + 1) in greenchunklist:
+        ncount += 1;
+    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != 0 and i + ((gscu) - 1) in greenchunklist:
+        ncount += 1;
+
+    return ncount;
 
 
 def Calculate():
@@ -87,12 +108,12 @@ def Calculate():
         #     loadperfs += 1
         #     print(loadperfs)
     r = 0
-    while r < gsc // 3:
+    while len(greenchunklist) < ((gsc / 10) * 3):
         rv = random.randint(1, 4)
         r+=1
         t = random.randint(1, gsc)
         if t in redchunklist:
-            if Count(t) >= 4:
+            if Count(t) >= 6:
 
                 redchunklist.remove(t);
 
@@ -142,7 +163,7 @@ def Calculate():
                     greenchunklist.append(t - gscu)
                 
         elif t in blackchunklist:
-            if Count(t) >= 4:
+            if Count(t) >= 6:
 
                 blackchunklist.remove(t);
 
@@ -186,7 +207,22 @@ def Calculate():
                     if t >= (gscu) and t - (gscu) in blackchunklist:
                         blackchunklist.remove(t - gscu);
                     greenchunklist.append(t - gscu)
+    o = 0
+    smoothinglist = list()
+    while o < gsc:
+        if o in redchunklist:
+            if CountSmoothing(o) >= 4:
+                redchunklist.remove(o);
+                smoothinglist.append(o)
 
+        elif o in blackchunklist:
+            if CountSmoothing(o) >= 4:
+                blackchunklist.remove(o);
+                smoothinglist.append(o)
+        o+=1
+
+
+    greenchunklist.extend(smoothinglist)
 
 
     main.donecalculating = True
