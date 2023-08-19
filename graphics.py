@@ -9,6 +9,7 @@ from main import greenchunklist
 from main import Count
 from main import gsc
 from main import gscu
+from main import donecalculating
 import sys;
 import time
 #gkdpv needs to be a divisible on gsc value
@@ -17,6 +18,7 @@ gkdpv = 1000
 i = 0;
 optimizedscrsize = True;
 showneighborcount = False;
+isreallydone = False
 # def GrassChunk():
 class MainApplication(QWidget):
     stoploadfs = False
@@ -61,11 +63,11 @@ class MainApplication(QWidget):
             draw.fillRect(redchunkcoord,y,gss,gss, Qt.blue)
             #draw.drawText(redchunkcoord+50, y+50, 1200, 1200, 0, str(redchunklist[i]))
             #
-            loadper+=1;
-            if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
-                loadpertd+=1
-                loadperfs+=1
-                print(loadperfs)
+            # loadper+=1;
+            # if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
+            #     loadpertd+=1
+            #     loadperfs+=1
+            #     print(loadperfs)
 
             kdp=gkdpv
             i += 1
@@ -92,11 +94,11 @@ class MainApplication(QWidget):
 
 
             draw.fillRect(blackchunkcoord, y, gss, gss, Qt.darkBlue)
-            loadper += 1;
-            if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
-                loadpertd += 1
-                loadperfs +=1
-                print(loadperfs)
+            # loadper += 1;
+            # if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
+            #     loadpertd += 1
+            #     loadperfs +=1
+            #     print(loadperfs)
             kdp = gkdpv
             i += 1
             y=0
@@ -120,10 +122,10 @@ class MainApplication(QWidget):
             if showneighborcount == True:
                 draw.drawText(greenchunkcoord + (gss//2), y + (gss//2), 1200, 1200, 0, str(Count(greenchunklist[i])))
             loadper += 1;
-            if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
-                loadpertd += 1
-                loadperfs +=1
-                print(loadperfs)
+            # if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
+            #     loadpertd += 1
+            #     loadperfs +=1
+            #     print(loadperfs)
 
             kdp = gkdpv
             i += 1
@@ -148,6 +150,8 @@ def RenderMap():
 
 
 
-
-RenderMap();
+while isreallydone == False:
+    if donecalculating == True:
+        RenderMap();
+        isreallydone = True
 
