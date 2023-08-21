@@ -4,11 +4,12 @@ import math
 # 100 is the best gscu value for testing and etc.
 import main
 
-gscu =200
+gscu =100
 gsc = gscu*gscu
 redchunklist = list();
 blackchunklist = list();
 greenchunklist = list();
+yellowchunklist = list()
 donecalculating = False
 def Count(i):
 
@@ -59,28 +60,30 @@ def CountSob(i):
 
     return ncount;
 
-def CountSmoothing(i):
+def CountDeep(i):
     ncount = 0;
 
-    if (i % (gscu)) != 9 and i + 1 in greenchunklist:
+    if (i % (gscu)) != 9 and i + 1 in blackchunklist:
         ncount += 1;
-    if (i % (gscu)) != 0 and i - 1 in greenchunklist:
+    if (i % (gscu)) != 0 and i - 1 in blackchunklist:
         ncount += 1;
-    if i >= (gscu) and i - (gscu) in greenchunklist:
+    if i >= (gscu) and i - (gscu) in blackchunklist:
         ncount += 1;
-    if i<=(9*gscu)  and i + (gscu) in greenchunklist:
+    if i<=(9*gscu)  and i + (gscu) in blackchunklist:
         ncount += 1;
 
-    if (i % (gscu)) != ((gscu) - 1) and i >= (gscu) and i - ((gscu) - 1) in greenchunklist:
+    if (i % (gscu)) != ((gscu) - 1) and i >= (gscu) and i - ((gscu) - 1) in blackchunklist:
         ncount += 1;
-    if (i % (gscu)) != 0 and i >= (gscu) and i - ((gscu) + 1) in greenchunklist:
+    if (i % (gscu)) != 0 and i >= (gscu) and i - ((gscu) + 1) in blackchunklist:
         ncount += 1;
-    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != ((gscu) - 1) and i + ((gscu) + 1) in greenchunklist:
+    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != ((gscu) - 1) and i + ((gscu) + 1) in blackchunklist:
         ncount += 1;
-    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != 0 and i + ((gscu) - 1) in greenchunklist:
+    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != 0 and i + ((gscu) - 1) in blackchunklist:
         ncount += 1;
 
     return ncount;
+
+
 
 
 def Calculate():
@@ -211,18 +214,32 @@ def Calculate():
     smoothinglist = list()
     while o < gsc:
         if o in redchunklist:
-            if CountSmoothing(o) >= 4:
+            if CountSob(o) >= 4:
                 redchunklist.remove(o);
                 smoothinglist.append(o)
 
         elif o in blackchunklist:
-            if CountSmoothing(o) >= 4:
+            if CountSob(o) >= 4:
                 blackchunklist.remove(o);
                 smoothinglist.append(o)
         o+=1
-
-
     greenchunklist.extend(smoothinglist)
+    l = 0
+
+    while l < len(greenchunklist):
+        if Count(greenchunklist[l]) >= 1 or CountDeep(greenchunklist[l]) >= 1:
+            yellowchunklist.append(greenchunklist[l])
+
+
+        l+=1
+    l = 0
+    greenchunkcount = len(greenchunklist)
+    for _ in (1, greenchunkcount + 1):
+        if greenchunklist[l] in yellowchunklist:
+            greenchunklist.pop(l)
+        else:
+            l+=1
+
 
 
     main.donecalculating = True

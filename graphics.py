@@ -6,6 +6,7 @@ import math
 from main import redchunklist
 from main import blackchunklist
 from main import greenchunklist
+from main import yellowchunklist
 from main import Count
 from main import gsc
 from main import gscu
@@ -118,7 +119,7 @@ class MainApplication(QWidget):
                 y += (gss * kdp) // (gkdpv)
                 greenchunkcoord -= kdp
 
-            draw.fillRect(greenchunkcoord, y, gss, gss, Qt.green)
+            draw.fillRect(greenchunkcoord, y, gss, gss, QColor(34, 186, 34))
             if showneighborcount == True:
                 draw.drawText(greenchunkcoord + (gss//2), y + (gss//2), 1200, 1200, 0, str(Count(greenchunklist[i])))
             loadper += 1;
@@ -127,6 +128,31 @@ class MainApplication(QWidget):
             #     loadperfs +=1
             #     print(loadperfs)
 
+            kdp = gkdpv
+            i += 1
+            y = 0
+        i = 0
+        y = 0
+        kdp = gkdpv
+        gss = int(gkdpv // gscu)
+        for _ in range(1, len(yellowchunklist) + 1):
+
+            yellowchunkcoord = yellowchunklist[i] * gss
+
+            if yellowchunkcoord >= kdp:
+
+                while yellowchunkcoord - kdp >= (gkdpv):
+                    kdp += (gkdpv)
+
+                y += (gss * kdp) // (gkdpv)
+                yellowchunkcoord -= kdp
+
+            draw.fillRect(yellowchunkcoord, y, gss, gss, QColor(255, 230, 117))
+            # loadper += 1;
+            # if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
+            #     loadpertd += 1
+            #     loadperfs +=1
+            #     print(loadperfs)
             kdp = gkdpv
             i += 1
             y = 0
