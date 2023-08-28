@@ -6,81 +6,38 @@ import main
 
 gscu =100
 gsc = gscu*gscu
-redchunklist = list();
-blackchunklist = list();
+cyanchunklist = list();
+darkbluechunklist = list();
 greenchunklist = list();
 yellowchunklist = list()
+brownchunklist = list()
+bluechunklist = list()
+villagechunklist = list()
+citychunklist = list()
 donecalculating = False
-def Count(i):
+def Count(i, listToSearch):
 
     ncount = 0;
 
-    if (i%(gscu)) != 9 and i+1 in redchunklist:
+    if (i%(gscu)) != 9 and i+1 in listToSearch:
         ncount+=1;
-    if (i%(gscu)) != 0 and i-1 in redchunklist:
+    if (i%(gscu)) != 0 and i-1 in listToSearch:
         ncount+=1;
-    if i>=(gscu) and i - (gscu) in redchunklist:
+    if i>=(gscu) and i - (gscu) in listToSearch:
         ncount += 1;
-    if i<=(9*gscu)  and i + (gscu) in redchunklist:
+    if  i + (gscu) in listToSearch:
         ncount += 1;
 
-    if (i % (gscu)) != ((gscu)-1) and i >= (gscu) and i - ((gscu)-1) in redchunklist:
+    if (i % (gscu)) != ((gscu)-1) and i >= (gscu) and i - ((gscu)-1) in listToSearch:
         ncount += 1;
-    if (i % (gscu)) != 0 and i >= (gscu) and i - ((gscu)+1) in redchunklist:
+    if (i % (gscu)) != 0 and i >= (gscu) and i - ((gscu)+1) in listToSearch:
         ncount += 1;
-    if i <= ((gscu)*((gscu)-1)) and (i % (gscu)) != ((gscu)-1) and i + ((gscu)+1) in redchunklist:
+    if i <= ((gscu)*((gscu)-1)) and (i % (gscu)) != ((gscu)-1) and i + ((gscu)+1) in listToSearch:
         ncount += 1;
-    if i <= ((gscu)*((gscu)-1)) and (i % (gscu)) != 0 and i + ((gscu)-1) in redchunklist:
+    if i <= ((gscu)*((gscu)-1)) and (i % (gscu)) != 0 and i + ((gscu)-1) in listToSearch:
         ncount += 1;
 
     
-    return ncount;
-
-
-def CountSob(i):
-    ncount = 0;
-
-    if (i % (gscu)) != 9 and i + 1 in greenchunklist:
-        ncount += 1;
-    if (i % (gscu)) != 0 and i - 1 in greenchunklist:
-        ncount += 1;
-    if i >= (gscu) and i - (gscu) in greenchunklist:
-        ncount += 1;
-    if i<=(9*gscu)  and i + (gscu) in greenchunklist:
-        ncount += 1;
-
-    if (i % (gscu)) != ((gscu) - 1) and i >= (gscu) and i - ((gscu) - 1) in greenchunklist:
-        ncount += 1;
-    if (i % (gscu)) != 0 and i >= (gscu) and i - ((gscu) + 1) in greenchunklist:
-        ncount += 1;
-    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != ((gscu) - 1) and i + ((gscu) + 1) in greenchunklist:
-        ncount += 1;
-    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != 0 and i + ((gscu) - 1) in greenchunklist:
-        ncount += 1;
-
-    return ncount;
-
-def CountDeep(i):
-    ncount = 0;
-
-    if (i % (gscu)) != 9 and i + 1 in blackchunklist:
-        ncount += 1;
-    if (i % (gscu)) != 0 and i - 1 in blackchunklist:
-        ncount += 1;
-    if i >= (gscu) and i - (gscu) in blackchunklist:
-        ncount += 1;
-    if i<=(9*gscu)  and i + (gscu) in blackchunklist:
-        ncount += 1;
-
-    if (i % (gscu)) != ((gscu) - 1) and i >= (gscu) and i - ((gscu) - 1) in blackchunklist:
-        ncount += 1;
-    if (i % (gscu)) != 0 and i >= (gscu) and i - ((gscu) + 1) in blackchunklist:
-        ncount += 1;
-    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != ((gscu) - 1) and i + ((gscu) + 1) in blackchunklist:
-        ncount += 1;
-    if i <= ((gscu) * ((gscu) - 1)) and (i % (gscu)) != 0 and i + ((gscu) - 1) in blackchunklist:
-        ncount += 1;
-
     return ncount;
 
 
@@ -98,11 +55,11 @@ def Calculate():
         rv = random.randint(1, 7)
         if rv <= 2:
 
-            redchunklist.append(i)
+            cyanchunklist.append(i)
             i+=1;
         else:
 
-            blackchunklist.append(i)
+            darkbluechunklist.append(i)
             i += 1
 
 
@@ -112,123 +69,215 @@ def Calculate():
         #     print(loadperfs)
     r = 0
     while len(greenchunklist) < ((gsc / 10) * 3):
-        rv = random.randint(1, 4)
+        rv = random.randint(1, 5)
         r+=1
         t = random.randint(1, gsc)
-        if t in redchunklist:
-            if Count(t) >= 6:
+        if t in cyanchunklist:
+            if Count(t, cyanchunklist) >= 6:
 
-                redchunklist.remove(t);
+                cyanchunklist.remove(t);
 
                 greenchunklist.append(t)
                 if rv == 1:
-                    if (t % (gscu)) != 9 and t + 1 in redchunklist:
-                        redchunklist.remove(t + 1);
+                    if (t % (gscu)) != 9 and t + 1 in cyanchunklist:
+                        cyanchunklist.remove(t + 1);
                     greenchunklist.append(t + 1)
                 elif rv == 2:
-                    if (t % (gscu)) != 0 and t - 1 in redchunklist:
-                        redchunklist.remove(t - 1);
+                    if (t % (gscu)) != 0 and t - 1 in cyanchunklist:
+                        cyanchunklist.remove(t - 1);
                     greenchunklist.append(t - 1)
                 elif rv == 3:
-                    if t <= (9 * gscu) and t + (gscu) in redchunklist:
-                        redchunklist.remove(t + gscu);
+                    if t <= (9 * gscu) and t + (gscu) in cyanchunklist:
+                        cyanchunklist.remove(t + gscu);
                     greenchunklist.append(t + gscu)
                 else:
-                    if t >= (gscu) and t - (gscu) in redchunklist:
-                        redchunklist.remove(t - gscu);
+                    if t >= (gscu) and t - (gscu) in cyanchunklist:
+                        cyanchunklist.remove(t - gscu);
                     greenchunklist.append(t - gscu)
 
-            elif CountSob(t) >= 1:
+            elif Count(t, greenchunklist) >= 1:
                 
                
                 
                 
 
 
-                redchunklist.remove(t);
+                cyanchunklist.remove(t);
 
                 greenchunklist.append(t)
                 if rv == 1:
-                    if (t % (gscu)) != 9 and t + 1 in redchunklist:
-                        redchunklist.remove(t+1);
+                    if (t % (gscu)) != 9 and t + 1 in cyanchunklist:
+                        cyanchunklist.remove(t + 1);
                     greenchunklist.append(t+1)
                 elif rv == 2:
-                    if (t % (gscu)) != 0 and t - 1 in redchunklist:
-                        redchunklist.remove(t-1);
+                    if (t % (gscu)) != 0 and t - 1 in cyanchunklist:
+                        cyanchunklist.remove(t - 1);
                     greenchunklist.append(t - 1)
                 elif rv == 3:
-                    if t<=(9*gscu)  and t + (gscu) in redchunklist:
-                        redchunklist.remove(t+gscu);
+                    if t<=(9*gscu)  and t + (gscu) in cyanchunklist:
+                        cyanchunklist.remove(t + gscu);
                     greenchunklist.append(t + gscu)
                 else:
-                    if t >= (gscu) and t - (gscu) in redchunklist:
-                        redchunklist.remove(t - gscu);
+                    if t >= (gscu) and t - (gscu) in cyanchunklist:
+                        cyanchunklist.remove(t - gscu);
                     greenchunklist.append(t - gscu)
                 
-        elif t in blackchunklist:
-            if Count(t) >= 6:
+        elif t in darkbluechunklist:
+            if Count(t, cyanchunklist) >= 6:
 
-                blackchunklist.remove(t);
-
-                greenchunklist.append(t)
-                if rv == 1:
-                    if (t % (gscu)) != 9 and t + 1 in blackchunklist:
-                        blackchunklist.remove(t + 1);
-                    greenchunklist.append(t + 1)
-                elif rv == 2:
-                    if (t % (gscu)) != 0 and t - 1 in blackchunklist:
-                        blackchunklist.remove(t - 1);
-                    greenchunklist.append(t - 1)
-                elif rv == 3:
-                    if t <= (9 * gscu) and t + (gscu) in blackchunklist:
-                        blackchunklist.remove(t + gscu);
-                    greenchunklist.append(t + gscu)
-                else:
-                    if t >= (gscu) and t - (gscu) in blackchunklist:
-                        blackchunklist.remove(t - gscu);
-                    greenchunklist.append(t - gscu)
-
-            elif CountSob(t) >= 1:
-
-
-                blackchunklist.remove(t);
+                darkbluechunklist.remove(t);
 
                 greenchunklist.append(t)
                 if rv == 1:
-                    if (t % (gscu)) != 9 and t + 1 in blackchunklist:
-                        blackchunklist.remove(t + 1);
+                    if (t % (gscu)) != 9 and t + 1 in darkbluechunklist:
+                        darkbluechunklist.remove(t + 1);
                     greenchunklist.append(t + 1)
                 elif rv == 2:
-                    if (t % (gscu)) != 0 and t - 1 in blackchunklist:
-                        blackchunklist.remove(t - 1);
+                    if (t % (gscu)) != 0 and t - 1 in darkbluechunklist:
+                        darkbluechunklist.remove(t - 1);
                     greenchunklist.append(t - 1)
                 elif rv == 3:
-                    if t <= (9 * gscu) and t + (gscu) in blackchunklist:
-                        blackchunklist.remove(t + gscu);
+                    if t <= (9 * gscu) and t + (gscu) in darkbluechunklist:
+                        darkbluechunklist.remove(t + gscu);
                     greenchunklist.append(t + gscu)
                 else:
-                    if t >= (gscu) and t - (gscu) in blackchunklist:
-                        blackchunklist.remove(t - gscu);
+                    if t >= (gscu) and t - (gscu) in darkbluechunklist:
+                        darkbluechunklist.remove(t - gscu);
                     greenchunklist.append(t - gscu)
+
+            elif Count(t, greenchunklist) >= 1:
+
+
+                darkbluechunklist.remove(t);
+
+                greenchunklist.append(t)
+                if rv == 1:
+                    if (t % (gscu)) != 9 and t + 1 in darkbluechunklist:
+                        darkbluechunklist.remove(t + 1);
+                    greenchunklist.append(t + 1)
+                elif rv == 2:
+                    if (t % (gscu)) != 0 and t - 1 in darkbluechunklist:
+                        darkbluechunklist.remove(t - 1);
+                    greenchunklist.append(t - 1)
+                elif rv == 3:
+                    if t <= (9 * gscu) and t + (gscu) in darkbluechunklist:
+                        darkbluechunklist.remove(t + gscu);
+                    greenchunklist.append(t + gscu)
+                else:
+                    if t >= (gscu) and t - (gscu) in darkbluechunklist:
+                        darkbluechunklist.remove(t - gscu);
+                    greenchunklist.append(t - gscu)
+    #smoothing
     o = 0
     smoothinglist = list()
     while o < gsc:
-        if o in redchunklist:
-            if CountSob(o) >= 4:
-                redchunklist.remove(o);
+        if o in cyanchunklist:
+            if Count(o, greenchunklist) >= 4:
+                cyanchunklist.remove(o);
                 smoothinglist.append(o)
 
-        elif o in blackchunklist:
-            if CountSob(o) >= 4:
-                blackchunklist.remove(o);
+        elif o in darkbluechunklist:
+            if Count(o, greenchunklist) >= 4:
+                darkbluechunklist.remove(o);
                 smoothinglist.append(o)
         o+=1
     greenchunklist.extend(smoothinglist)
-    l = 0
+    #lonely sea tiles removal
+    s = 0
+    while s < len(cyanchunklist):
+        if Count(cyanchunklist[s], darkbluechunklist) >= 4 and Count(cyanchunklist[s], cyanchunklist) <= 2 and Count(cyanchunklist[s], greenchunklist) < 1:
+            darkbluechunklist.append(cyanchunklist[s])
 
+        s += 1
+    s = 0
+    cyanchunkcount = len(cyanchunklist)
+    for _ in (1, cyanchunkcount + 1):
+        if cyanchunklist[s] in darkbluechunklist:
+            cyanchunklist.pop(s)
+        else:
+            s += 1
+    #fresh water calculator
+    s = 0
+    while s < len(cyanchunklist):
+        if Count(cyanchunklist[s], greenchunklist) >= 5 and Count(cyanchunklist[s], darkbluechunklist) < 1:
+            bluechunklist.append(cyanchunklist[s])
+
+        s += 1
+    s = 0
+    cyanchunkcount = len(cyanchunklist)
+    for _ in (1, cyanchunkcount + 1):
+        if cyanchunklist[s] in bluechunklist:
+            cyanchunklist.pop(s)
+        else:
+            s += 1
+    #fresh water expanding
+    s = 0
+    while s < len(greenchunklist):
+        r = random.randint(1,2)
+        if Count(greenchunklist[s], bluechunklist) >= 1 and r == 2 and Count(greenchunklist[s], darkbluechunklist) < 1 and Count(greenchunklist[s], cyanchunklist) < 1:
+            bluechunklist.append(greenchunklist[s])
+
+        s += 1
+    s = 0
+    greenchunkcount = len(greenchunklist)
+    for _ in (1, greenchunkcount + 1):
+        if greenchunklist[s] in bluechunklist:
+            greenchunklist.pop(s)
+        else:
+            s += 1
+    #fertile land calculator
+    s=0
+    while s < len(greenchunklist):
+        r = random.randint(1,2)
+        if Count(greenchunklist[s], bluechunklist) >= 1 and r == 2:
+            brownchunklist.append(greenchunklist[s])
+
+        s += 1
+    s = 0
+    greenchunkcount = len(greenchunklist)
+    for _ in (1, greenchunkcount + 1):
+        if greenchunklist[s] in brownchunklist:
+            greenchunklist.pop(s)
+        else:
+            s += 1
+    #village generation
+    s = 0
+    while s < len(greenchunklist):
+        r = random.randint(1, 6)
+        if Count(greenchunklist[s], brownchunklist) >= 3 and r >= 2:
+            villagechunklist.append(greenchunklist[s])
+
+        s += 1
+    s = 0
+    greenchunkcount = len(greenchunklist)
+    for _ in (1, greenchunkcount + 1):
+        if greenchunklist[s] in villagechunklist:
+            greenchunklist.pop(s)
+        else:
+            s += 1
+    #city generation
+    s = 0
+    while s < len(greenchunklist):
+        r = random.randint(1, 10)
+        if Count(greenchunklist[s], villagechunklist) >= 2 and r >= 2 and Count(greenchunklist[s], cyanchunklist) < 1:
+            citychunklist.append(greenchunklist[s])
+
+        s += 1
+    s = 0
+    greenchunkcount = len(greenchunklist)
+    for _ in (1, greenchunkcount + 1):
+        if greenchunklist[s] in citychunklist:
+            greenchunklist.pop(s)
+        else:
+            s += 1
+    #sand generation
+    l = 0
     while l < len(greenchunklist):
-        if Count(greenchunklist[l]) >= 1 or CountDeep(greenchunklist[l]) >= 1:
-            yellowchunklist.append(greenchunklist[l])
+        r = random.randint(1, 7)
+        if Count(greenchunklist[l], cyanchunklist) >= 1 or Count(greenchunklist[l], darkbluechunklist) >= 1:
+            if Count(greenchunklist[l], bluechunklist) < 1:
+                if r < 7:
+                    yellowchunklist.append(greenchunklist[l])
 
 
         l+=1
