@@ -13,6 +13,7 @@ from main import brownchunklist
 from main import bluechunklist
 from main import villagechunklist
 from main import citychunklist
+from main import roadchunklist
 from main import Count
 from main import gsc
 from main import gscu
@@ -280,6 +281,31 @@ class MainApplication(QWidget):
                     draw.drawText(citychunkcoord - (2 * gss), y-gss, gss + (2 *gss), 5*gss, 5, namesyllables[random.randint(0, len(namesyllables)-1)] + namesyllables[random.randint(0, len(namesyllables)-1)]+namesyllables[random.randint(0, len(namesyllables)-1)])
                 elif r==4:
                     draw.drawText(citychunkcoord - (2 * gss), y-gss, gss + (2 * gss), 5*gss, 5,namesyllables[random.randint(0, len(namesyllables)-1)] + namesyllables[random.randint(0, len(namesyllables)-1)] + namesyllables[random.randint(0, len(namesyllables)-1)] + namesyllables[random.randint(0, len(namesyllables)-1)])
+            # loadper += 1;
+            # if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
+            #     loadpertd += 1
+            #     loadperfs +=1
+            #     print(loadperfs)
+            kdp = gkdpv
+            i += 1
+            y = 0
+        i = 0
+        y = 0
+        kdp = gkdpv
+        gss = int(gkdpv // gscu)
+        for _ in range(1, len(roadchunklist) + 1):
+
+            roadchunkcoord = roadchunklist[i] * gss
+
+            if roadchunkcoord >= kdp:
+
+                while roadchunkcoord - kdp >= (gkdpv):
+                    kdp += (gkdpv)
+
+                y += (gss * kdp) // (gkdpv)
+                roadchunkcoord -= kdp
+
+            draw.fillRect(roadchunkcoord, y, gss, gss, QColor(245, 167, 66))
             # loadper += 1;
             # if loadper == loadperchunk * loadpertd and MainApplication.stoploadfs == False:
             #     loadpertd += 1

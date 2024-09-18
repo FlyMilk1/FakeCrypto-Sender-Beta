@@ -6,6 +6,8 @@ import main
 
 gscu =100
 gsc = gscu*gscu
+smoothingAmount = 1;#the smaller the number the more smoothing
+LakeChance = 1;
 cyanchunklist = list();
 darkbluechunklist = list();
 greenchunklist = list();
@@ -14,6 +16,7 @@ brownchunklist = list()
 bluechunklist = list()
 villagechunklist = list()
 citychunklist = list()
+roadchunklist = list()
 donecalculating = False
 def Count(i, listToSearch):
 
@@ -172,12 +175,12 @@ def Calculate():
     smoothinglist = list()
     while o < gsc:
         if o in cyanchunklist:
-            if Count(o, greenchunklist) >= 4:
+            if Count(o, greenchunklist) >= smoothingAmount:
                 cyanchunklist.remove(o);
                 smoothinglist.append(o)
 
         elif o in darkbluechunklist:
-            if Count(o, greenchunklist) >= 4:
+            if Count(o, greenchunklist) >= smoothingAmount:
                 darkbluechunklist.remove(o);
                 smoothinglist.append(o)
         o+=1
@@ -225,6 +228,36 @@ def Calculate():
             greenchunklist.pop(s)
         else:
             s += 1
+    # fresh water expanding2
+    # s = 0
+    # while s < len(cyanchunklist):
+    #     r = random.randint(1, 2)
+    #     if Count(cyanchunklist[s], bluechunklist) >= 1:
+    #         bluechunklist.append(cyanchunklist[s])
+    #
+    #     s += 1
+    # s = 0
+    # cyanchunkcount = len(cyanchunklist)
+    # for _ in (1, cyanchunkcount + 1):
+    #     if cyanchunklist[s] in bluechunklist:
+    #         cyanchunklist.pop(s)
+    #     else:
+    #         s += 1
+    # fresh water expanding3
+    # s = 0
+    # while s < len(darkbluechunklist):
+    #     r = random.randint(1, 2)
+    #     if Count(darkbluechunklist[s], bluechunklist) >= 1:
+    #         bluechunklist.append(darkbluechunklist[s])
+    #
+    #     s += 1
+    # s = 0
+    # cyanchunkcount = len(cyanchunklist)
+    # for _ in (1, cyanchunkcount + 1):
+    #     if darkbluechunklist[s] in bluechunklist:
+    #         darkbluechunklist.pop(s)
+    #     else:
+    #         s += 1
     #fertile land calculator
     s=0
     while s < len(greenchunklist):
@@ -255,16 +288,32 @@ def Calculate():
             greenchunklist.pop(s)
         else:
             s += 1
-    #city generation
+    #city generation + tutorial if i forgor
     s = 0
-    while s < len(greenchunklist):
-        r = random.randint(1, 10)
-        if Count(greenchunklist[s], villagechunklist) >= 2 and r >= 2 and Count(greenchunklist[s], cyanchunklist) < 1:
+    while s < len(greenchunklist):#greenchunklist is the slots it can use Ex: Cities can be only on green land
+        r = random.randint(1, 10)#Random
+        if Count(greenchunklist[s], villagechunklist) >= 2 and r >= 2 and Count(greenchunklist[s], cyanchunklist) < 1:#requirements for the city Ex.Near 2 Villages & Near 0 Sea
             citychunklist.append(greenchunklist[s])
 
         s += 1
     s = 0
-    greenchunkcount = len(greenchunklist)
+    greenchunkcount = len(greenchunklist)#removal of the replaced green chunks
+    for _ in (1, greenchunkcount + 1):
+        if greenchunklist[s] in citychunklist:
+            greenchunklist.pop(s)
+        else:
+            s += 1
+    s = 0
+    #Road gen
+    while s < len(greenchunklist):
+        r = random.randint(1, 8)
+        if (Count(greenchunklist[s], citychunklist) >= 1 and r == 5 and Count(greenchunklist[s], roadchunklist) < 1) or Count(greenchunklist[s], roadchunklist) == 1:
+
+            roadchunklist.append(greenchunklist[s])
+
+        s += 1
+    s = 0
+    greenchunkcount = len(greenchunklist)  # removal of the replaced green chunks
     for _ in (1, greenchunkcount + 1):
         if greenchunklist[s] in citychunklist:
             greenchunklist.pop(s)
